@@ -34,6 +34,6 @@ async function sendSOSMessage(latitude, longitude) {
   console.log(`Sending SOS to 119 for location: ${latitude}, ${longitude}`);
   // Simulated API call to emergency services
   // In a real-world scenario, you'd implement the actual API call here
-  await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulating API call delay
+  // await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulating API call delay
   console.log("SOS message sent successfully");
 }

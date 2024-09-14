@@ -5,6 +5,7 @@ const CHARACTERISTIC_UUID = "beb5483e-36e1-4688-b7f5-ea07361b26a8";
 
 export function useBluetoothConnection() {
   const [device, setDevice] = useState(null);
+  const [gasLevel, setGasLevel] = useState(0);
 
   const connectToESP32 = async () => {
     try {
@@ -22,12 +23,15 @@ export function useBluetoothConnection() {
         CHARACTERISTIC_UUID
       );
 
-      console.log("Connected to ESP32 device:", device);
-      console.log("Connected to GATT server:", characteristic);
+      const value = await characteristic.readValue();
+      const dataView = new DataView(value.buffer);
+      const gasLevel = dataView.getInt32(0, true);
+      setGasLevel(gasLevel);
+      console.log("Received integer value:", gasLevel);
     } catch (error) {
       console.error("Bluetooth connection failed:", error);
     }
   };
 
-  return { connectToESP32 };
+  return { connectToESP32, gasLevel };
 }

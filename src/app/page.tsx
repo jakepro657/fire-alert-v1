@@ -1,14 +1,30 @@
 // app/page.js
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useBluetoothConnection } from '../hooks/useBluetoothConnection';
 
 export default function Home() {
-  const [gasLevel, setGasLevel] = useState('');
-  const [latitude, setLatitude] = useState('');
-  const [longitude, setLongitude] = useState('');
-  const { connectToESP32 } = useBluetoothConnection();
+  const [gasLevel, setGasLevel] = useState(0);
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
+  const { connectToESP32, gasLevel: gl } = useBluetoothConnection();
+
+  useEffect(() => {
+    const coordinates = navigator.geolocation.getCurrentPosition((position) => {
+      setLatitude(position.coords.latitude);
+      setLongitude(position.coords.longitude);
+
+      return {
+        longitude: position.coords.longitude,
+        latitude: position.coords.latitude
+      }
+    });
+
+    setGasLevel(gl)
+    // console.log("Coordinates:", coordinates);
+  }, [gl]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
