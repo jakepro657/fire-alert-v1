@@ -30,7 +30,7 @@ export async function POST(request) {
             text:
               "긴급 SOS 신고\n신고자 ID: " +
               session.token.id +
-              `본 카카오톡 유저가 긴급 상황입니다. 즉시 119 호출 부탁드립니다.\n
+              `\n본 카카오톡 유저가 긴급 상황입니다. 즉시 119 호출 부탁드립니다.\n
                 가스 농도: ${gas_level}\n
                 위도: ${latitude}\n
                 경도: ${longitude}

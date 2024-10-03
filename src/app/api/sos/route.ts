@@ -22,7 +22,7 @@ export async function POST(request: NextRequest) {
           text:
             "긴급 SOS 신고\n신고자 ID: " +
             session.token.id +
-            "본 카카오톡 유저가 긴급 상황입니다. 즉시 119 호출 부탁드립니다.",
+            "\n본 카카오톡 유저가 긴급 상황입니다. 즉시 119 호출 부탁드립니다.",
           link: {
             web_url: "https://www.119.go.kr",
             mobile_web_url: "https://www.119.go.kr",

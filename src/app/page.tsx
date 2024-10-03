@@ -48,7 +48,7 @@ export default function Home() {
 
   const login = async () => {
     await signIn('kakao', {
-      callbackUrl: "http://localhost:3000/api/auth/callback/kakao"
+      callbackUrl: `http://${process.env.NEXT_PUBLIC_REDIRECT_URI}/api/auth/callback/kakao`
     })
     // const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${encodeURIComponent(process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI as string)}&response_type=code`;
     // window.location.href = s?.url as string;
