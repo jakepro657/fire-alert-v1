@@ -6,9 +6,9 @@ import { useBluetoothConnection } from '../hooks/useBluetoothConnection';
 import { signIn, signOut, useSession } from 'next-auth/react';
 
 export default function Home() {
-  const [gasLevel, setGasLevel] = useState(0);
-  const [latitude, setLatitude] = useState(0);
-  const [longitude, setLongitude] = useState(0);
+  const [gasLevel, setGasLevel] = useState<any>(0);
+  const [latitude, setLatitude] = useState<any>(0);
+  const [longitude, setLongitude] = useState<any>(0);
   const { connectToESP32, gasLevel: gl } = useBluetoothConnection();
 
   const { data, status } = useSession();
@@ -30,7 +30,7 @@ export default function Home() {
   }, [gl]);
 
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     const data = JSON.stringify({
       gas_level: parseFloat(gasLevel),
@@ -59,24 +59,24 @@ export default function Home() {
     await signOut()
   }
 
-  const report = async () => {
+  // const report = async () => {
 
-    console.log(data?.user)
+  //   console.log(data?.user)
 
-    const response = await fetch('/api/sos', {
-      body: JSON.stringify({
-        userId: data?.user?.id
-      }),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      method: 'POST'
-    })
+  //   const response = await fetch('/api/sos', {
+  //     body: JSON.stringify({
+  //       userId: data?.user?.id
+  //     }),
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     method: 'POST'
+  //   })
 
-    const result = await response.json()
+  //   const result = await response.json()
 
-    console.log(result)
-  }
+  //   console.log(result)
+  // }
 
   const update = async () => {
     const response = await fetch('/api/account')
@@ -141,12 +141,12 @@ export default function Home() {
         </button>
         }
       </div>
-      <button
+      {/* <button
         className="bg-red-500 text-white px-4 py-2 rounded mt-4"
         onClick={report}
       >
         테스트 신고
-      </button>
+      </button> */}
       <button
         className="bg-red-500 text-white px-4 py-2 rounded mt-4"
         onClick={update}
