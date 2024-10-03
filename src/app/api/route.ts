@@ -3,7 +3,7 @@ import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import authOptions from "../../../auth/option";
 
-export async function POST(request) {
+export async function POST(request: Request) {
   const { gas_level, latitude, longitude, userId } = await request.json();
 
   console.log(
