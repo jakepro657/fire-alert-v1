@@ -3,15 +3,14 @@
 
 import { useEffect, useState } from 'react';
 import { useBluetoothConnection } from '../hooks/useBluetoothConnection';
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
+import TopNavbar from '@/components/TopNavbar';
 
 export default function Home() {
   const [gasLevel, setGasLevel] = useState<any>(0);
   const [latitude, setLatitude] = useState<any>(0);
   const [longitude, setLongitude] = useState<any>(0);
   const { connectToESP32, gasLevel: gl } = useBluetoothConnection();
-
-  const { data, status } = useSession();
 
 
   useEffect(() => {
@@ -46,56 +45,13 @@ export default function Home() {
     })
   };
 
-  const login = async () => {
-    await signIn('kakao', {
-      callbackUrl: `http://${process.env.NEXT_PUBLIC_REDIRECT_URI}/api/auth/callback/kakao`
-    })
-    // const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&redirect_uri=${encodeURIComponent(process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI as string)}&response_type=code`;
-    // window.location.href = s?.url as string;
-    // window.location.href = kakaoAuthUrl;
-  }
-
-  const logout = async () => {
-    await signOut()
-  }
-
-  // const report = async () => {
-
-  //   console.log(data?.user)
-
-  //   const response = await fetch('/api/sos', {
-  //     body: JSON.stringify({
-  //       userId: data?.user?.id
-  //     }),
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     method: 'POST'
-  //   })
-
-  //   const result = await response.json()
-
-  //   console.log(result)
-  // }
-
-  const update = async () => {
-    const response = await fetch('/api/account')
-
-    const result = await response.json()
-
-    console.log(result)
-  }
-
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Gas Sensor and GPS Data Collection</h1>
-      <button
-        onClick={connectToESP32}
-        className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
-      >
-        Connect to ESP32
-      </button>
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="flex flex-col h-full container mx-auto p-4 w-full sm:w-[500px] bg-[antiquewhite]">
+      <TopNavbar />
+      <h1 className="text-2xl font-bold mb-4">
+        KSEF Gas Monitoring System
+      </h1>
+      <form onSubmit={handleSubmit} className="gap-3 w-full h-full flex flex-col">
         <input
           type="number"
           value={gasLevel}
@@ -122,25 +78,12 @@ export default function Home() {
         />
         <button
           type="submit"
-          className="bg-green-500 text-white px-4 py-2 rounded"
+          className="bg-red-500 font-bold text-3xl mx-auto my-auto text-white px-4 py-2 rounded-full w-32 h-32"
         >
-          Send Data
+          SOS
         </button>
       </form>
-      <div className='mt-2'>
-        {status == "authenticated" ? <button
-          className="bg-yellow-500 text-white px-4 py-2 rounded"
-          onClick={logout}
-        >
-          로그아웃
-        </button> : <button
-          className="bg-yellow-500 text-white px-4 py-2 rounded"
-          onClick={login}
-        >
-          카카오로 로그인
-        </button>
-        }
-      </div>
+
       {/* <button
         className="bg-red-500 text-white px-4 py-2 rounded mt-4"
         onClick={report}
@@ -148,10 +91,10 @@ export default function Home() {
         테스트 신고
       </button> */}
       <button
-        className="bg-red-500 text-white px-4 py-2 rounded mt-4"
-        onClick={update}
+        onClick={connectToESP32}
+        className="bg-blue-500 text-white mt-auto px-4 py-2 rounded mb-4"
       >
-        동의 갱신
+        Connect to ESP32
       </button>
     </div>
   );
