@@ -10,7 +10,7 @@ export async function POST(request: Request) {
     `Received data: Gas Level: ${gas_level}, Lat: ${latitude}, Long: ${longitude}`
   );
 
-  if (gas_level > 2000) {
+  if (gas_level > 5800) {
     const session: any = await getServerSession(authOptions);
 
     console.log("session:", session.token.access_token);

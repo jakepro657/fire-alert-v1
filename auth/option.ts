@@ -25,7 +25,7 @@ export const authOptions: AuthOptions = {
       // allowDangerousEmailAccountLinking: true
       authorization: {
         params: {
-          scope: "profile_nickname profile_image talk_message",
+          scope: "profile_nickname profile_image talk_message friends",
         },
       },
     }),

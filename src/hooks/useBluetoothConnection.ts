@@ -17,15 +17,16 @@ export function useBluetoothConnection() {
 
       setDevice(device);
 
-      const server = await device.gatt.connect();
-      const service = await server.getPrimaryService(SERVICE_UUID);
+      const server = await device.gatt.connect(); // Connect to the device
+      const service = await server.getPrimaryService(SERVICE_UUID); // Get the service
       const characteristic = await service.getCharacteristic(
+        // Get the characteristic (data)
         CHARACTERISTIC_UUID
       );
 
-      const value = await characteristic.readValue();
-      const dataView = new DataView(value.buffer);
-      const gasLevel = dataView.getInt32(0, true);
+      const value = await characteristic.readValue(); // Read the value
+      const dataView = new DataView(value.buffer); // Convert the value to a DataView
+      const gasLevel = dataView.getInt32(0, true); // Get the integer value
       setGasLevel(gasLevel);
       console.log("Received integer value:", gasLevel);
     } catch (error) {

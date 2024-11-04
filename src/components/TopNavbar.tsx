@@ -38,7 +38,7 @@ function TopNavbar({ }: Props) {
                         className="bg-green-500 text-white px-4 py-2 rounded"
                         onClick={update}
                     >
-                        동의 갱신
+                        Renew Account Consent
                     </button>
 
                 ) : (
@@ -49,7 +49,7 @@ function TopNavbar({ }: Props) {
                 className="ml-auto bg-yellow-500 text-white px-4 py-2 rounded"
                 onClick={logout}
             >
-                로그아웃
+                logout
             </button> : <button
                 className="ml-auto text-white rounded"
                 onClick={login}

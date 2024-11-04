@@ -15,6 +15,15 @@ export async function GET() {
     }
   );
 
+  const response2 = await fetch(
+    `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_REST_API}&redirect_uri=${process.env.KAKAO_REDIRECT_URI}&response_type=code&scope=friends`,
+    {
+      headers: {
+        Authorization: `Bearer ${session.token.access_token}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    }
+  );
   //   const res = await response.json();
 
   if (!response.ok) {

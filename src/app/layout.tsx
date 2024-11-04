@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Script from "next/script";
 import Providers from "@/components/Providers";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,12 +18,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <Providers>
-          {children}
-        </Providers>
-      </body>
-    </html>
+    <>
+      <html lang="en">
+        <head>
+          <Script
+            type="text/javascript"
+            strategy="beforeInteractive"
+            src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID}&libraries=services&autoload=false`}
+          ></Script>
+        </head>
+        <body className={inter.className}>
+          <Providers>
+            {children}
+          </Providers>
+        </body>
+      </html>
+    </>
   );
 }
