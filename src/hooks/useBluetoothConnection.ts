@@ -24,11 +24,24 @@ export function useBluetoothConnection() {
         CHARACTERISTIC_UUID
       );
 
-      const value = await characteristic.readValue(); // Read the value
-      const dataView = new DataView(value.buffer); // Convert the value to a DataView
-      const gasLevel = dataView.getInt32(0, true); // Get the integer value
-      setGasLevel(gasLevel);
-      console.log("Received integer value:", gasLevel);
+      await characteristic.startNotifications(); // Start listening for changes
+
+      characteristic.addEventListener(
+        "characteristicvaluechanged",
+        (event: any) => {
+          const value = event.target.value;
+          const dataView = new DataView(value.buffer);
+          const gasLevel = dataView.getInt32(0, true);
+          setGasLevel(gasLevel);
+          console.log("Gas level updated:", gasLevel);
+        }
+      );
+
+      // const value = await characteristic.readValue(); // Read the value
+      // const dataView = new DataView(value.buffer); // Convert the value to a DataView
+      // const gasLevel = dataView.getInt32(0, true); // Get the integer value
+      // setGasLevel(gasLevel);
+      // console.log("Received integer value:", gasLevel);
     } catch (error) {
       console.error("Bluetooth connection failed:", error);
     }
