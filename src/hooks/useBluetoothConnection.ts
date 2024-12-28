@@ -10,7 +10,7 @@ export function useBluetoothConnection() {
   const connectToESP32 = async () => {
     try {
       const device = await (navigator as any).bluetooth.requestDevice({
-        filters: [{ name: "ESP32_Gas_Sensor" }],
+        filters: [{ name: "ESP32" }],
         optionalServices: [SERVICE_UUID],
         // acceptAllDevices: true,
       });
